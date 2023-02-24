@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint src/**/*.js",
     "test": "npm run lint && jest",
+    "test:integration": "./integration.sh",
     "test:watch": "jest --watch"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "commander": "^10.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "eslint": "^8.34.0",
     "eslint-config-semistandard": "^17.0.0",
     "eslint-config-standard": "^17.0.0",
