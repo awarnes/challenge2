@@ -56,7 +56,7 @@ describe('parse/', () => {
           expect(err.code).toBe(STREET_NAME_NOT_FOUND_ERROR);
           expect(err.message).toBe("Street name not found!");
         }
-      })
+      });
     })
   });
 });
