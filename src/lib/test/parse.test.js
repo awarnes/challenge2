@@ -1,8 +1,9 @@
 'use strict';
 
 const parse = require('../parse');
-
-describe.skip('parse/', () => {
+const {TYPE_ERROR, STREET_NAME_NOT_FOUND_ERROR} = require('../errors/error-codes');
+const ShipRouteError = require('../errors/ship-route-error');
+describe('parse/', () => {
   describe('streetName/', () => {
     it('returns the street name from a simple address string', () => {
       expect(parse.streetName('123 Fake St')).toEqual('Fake');
@@ -15,25 +16,47 @@ describe.skip('parse/', () => {
     it('returns the street name from an address with apartment string', () => {
       expect(parse.streetName('123 False Portal Avenue Apt C, Luna, NM 87120')).toEqual('False Portal');
     });
+
+    describe('errors/', () => {
+      it('throws an error when a number is passed', () => {
+        try {
+          parse.streetName(12);
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [12] not of type string');
+        }
+      })
+
+      it('throws an error when an array is passed', () => {
+        try {
+          parse.streetName(['apple', 'sauce']);
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [["apple","sauce"]] not of type string');
+        }
+      })
+
+      it('throws an error when an object is passed', () => {
+        try {
+          parse.streetName({gary: 'Indiana', length: 12});
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [{"gary":"Indiana","length":12}] not of type string');
+        }
+      });
+
+      it('throws an error when a street name cannot be found', () => {
+        try {
+          parse.streetName('')
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(STREET_NAME_NOT_FOUND_ERROR);
+          expect(err.message).toBe("Street name not found!");
+        }
+      });
+    })
   });
 });
-
-/**
- * 8542 Glen Eagles Ave.
-Moncks Corner, SC 29461
-
-47 Brook Drive
-Riverside, NJ 08075
-
-428 Prince Avenue
-Jamaica, NY 11432
-
-7173 South Sherwood Dr.
-Gloucester, MA 01930
-
-7818 Jockey Hollow Dr.
-Quakertown, PA 18951
-
-93 Carriage Road
-Pasadena, MD 21122
- */
