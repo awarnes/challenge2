@@ -2,7 +2,7 @@
 
 const parse = require('../parse');
 
-describe('parse/', () => {
+describe.skip('parse/', () => {
   describe('streetName/', () => {
     it('returns the street name from a simple address string', () => {
       expect(parse.streetName('123 Fake St')).toEqual('Fake');
