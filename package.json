@@ -1,0 +1,31 @@
+{
+  "name": "shipment-routing",
+  "version": "1.0.0",
+  "description": "Take home code challenge",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awarnes/shipment-routing.git"
+  },
+  "author": "awarnes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awarnes/shipment-routing/issues"
+  },
+  "homepage": "https://github.com/awarnes/shipment-routing#readme",
+  "dependencies": {
+    "commander": "^10.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
