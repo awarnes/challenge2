@@ -1,7 +1,6 @@
-const {
-  factors,
-  lengthIsEven
-} = require('../rules');
+'use strict';
+
+const {factors, lengthIsEven, countVowels} = require('../rules');
 
 describe('rules/', () => {
   describe('factors/', () => {
@@ -36,6 +35,25 @@ describe('rules/', () => {
       expect(lengthIsEven(['apple', 'sauce']))
         .toThrow('Error: [[\'apple\', \'sauce\']] is not a string.');
       expect(lengthIsEven({gary: 'Indiana', length: 12}))
+        .toThrow('Error: [{gary: \'Indiana\', length: 12}] is not a string.');
+    });
+  });
+
+  describe('countVowels/', () => {
+    it('returns the correct number of vowels in a string', () => {
+      expect(countVowels('Gerold')).toBe(2);
+      expect(countVowels('Lady Gaga')).toBe(4);
+    });
+
+    it('returns the 0 if there are no vowels in a string', () => {
+      expect(countVowels('Psst')).toBe(0);
+    });
+
+    it('throws error when a string isn\'t passed in', () => {
+      expect(countVowels(12)).toThrow('Error: [12] is not a string.');
+      expect(countVowels(['apple', 'sauce']))
+        .toThrow('Error: [[\'apple\', \'sauce\']] is not a string.');
+      expect(countVowels({gary: 'Indiana', length: 12}))
         .toThrow('Error: [{gary: \'Indiana\', length: 12}] is not a string.');
     });
   });
