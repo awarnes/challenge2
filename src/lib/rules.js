@@ -3,6 +3,32 @@
 const { throwTypeError } = require('./errors/error-utils');
 
 /**
+ * Returns the common factors of two numbers
+ * @param {Number} first
+ * @param {Number} second
+ */
+function commonFactors (first, second) {
+  const firstFactors = factorize(first);
+  const secondFactors = factorize(second);
+
+  return firstFactors.filter(value => secondFactors.includes(value));
+}
+
+/**
+ * Count number of consonants in a given string
+ * TODO: Add 'sometimes y' counting
+ * @param {String} string
+ * @returns {Number} number of vowels in a given string
+ */
+function countConsonants (string) {
+  if (typeof string !== 'string') {
+    throwTypeError(string, 'string');
+  }
+  const consonants = string.toLowerCase().match(/[bcdfghjklmnpqrstvwxyz]/g);
+  return consonants ? consonants.length : 0;
+}
+
+/**
  * Count number of vowels in a given string
  * TODO: Add 'sometimes y' counting
  * @param {String} string
@@ -12,7 +38,7 @@ function countVowels (string) {
   if (typeof string !== 'string') {
     throwTypeError(string, 'string');
   }
-  const vowels = string.match(/[aeiouAEIOU]/g);
+  const vowels = string.toLowerCase().match(/[aeiou]/g);
   return vowels ? vowels.length : 0;
 }
 
@@ -46,6 +72,8 @@ function lengthIsEven (string) {
 }
 
 module.exports = {
+  commonFactors,
+  countConsonants,
   countVowels,
   factorize,
   lengthIsEven

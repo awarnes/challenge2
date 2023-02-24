@@ -1,6 +1,6 @@
 'use strict';
 
-const {factorize, lengthIsEven, countVowels} = require('../rules');
+const {commonFactors, countConsonants, countVowels, factorize, lengthIsEven} = require('../rules');
 const ShipRouteError = require('../errors/ship-route-error');
 const {TYPE_ERROR} = require('../errors/error-codes');
 
@@ -93,6 +93,52 @@ describe('rules/', () => {
     });
   });
 
+  describe('countConsonants/', () => {
+    it('returns the correct number of vowels in a string', () => {
+      expect(countConsonants('Gerold')).toBe(4);
+    });
+
+    it.skip('returns the correct count of vowels including "Y"', () => {
+      expect(countConsonants('Lady Gaga')).toBe(5);
+    })
+
+    it('returns the 0 if there are no vowels in a string', () => {
+      expect(countConsonants('Psst')).toBe(4);
+    });
+
+    describe('errors/', () => {
+      it('throws an error when a number is passed', () => {
+        try {
+          countConsonants(12);
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [12] not of type string');
+        }
+      })
+
+      it('throws an error when an array is passed', () => {
+        try {
+          countConsonants(['apple', 'sauce']);
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [["apple","sauce"]] not of type string');
+        }
+      })
+
+      it('throws an error when an object is passed', () => {
+        try {
+          countConsonants({gary: 'Indiana', length: 12});
+        } catch (err) {
+          expect(err).toBeInstanceOf(ShipRouteError);
+          expect(err.code).toBe(TYPE_ERROR);
+          expect(err.message).toBe('Error: [{"gary":"Indiana","length":12}] not of type string');
+        }
+      });
+    });
+  });
+
   describe('countVowels/', () => {
     it('returns the correct number of vowels in a string', () => {
       expect(countVowels('Gerold')).toBe(2);
@@ -136,6 +182,20 @@ describe('rules/', () => {
           expect(err.message).toBe('Error: [{"gary":"Indiana","length":12}] not of type string');
         }
       });
+    });
+  });
+
+  describe('commonFactors/', () => {
+    it('returns factors for an even and an odd number', () => {
+      expect(commonFactors(24, 37)).toEqual([1]);
+    });
+
+    it('returns common factors for two even numbers', () => {
+      expect(commonFactors(12, 608)).toEqual([1, 2, 4]);
+    });
+
+    it('returns common factors for two odd numbers', () => {
+      expect(commonFactors(35, 15)).toEqual([1, 5]);
     });
   });
 });
