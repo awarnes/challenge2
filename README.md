@@ -21,3 +21,7 @@ Write an application in the language of your choice that assigns shipment destin
 The output should be the total SS and a matching between shipment destinations and drivers.
 
 You do not need to worry about malformed input, but you should certainly handle both upper and lower case names.
+
+### Future Possibilities
+- Address parsing/validation API: https://www.smarty.com/pricing/choose-your-plan
+- NLP Based Address Parsing: https://www.npmjs.com/package/node-postal
