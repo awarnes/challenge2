@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "test": "npm run lint"
+    "test": "npm run lint && jest",
+    "test:integration": "./integration.sh",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -18,14 +20,17 @@
   },
   "homepage": "https://github.com/awarnes/shipment-routing#readme",
   "dependencies": {
+    "@conpago/address": "^0.2.1",
     "commander": "^10.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "eslint": "^8.34.0",
     "eslint-config-semistandard": "^17.0.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.4.3"
   }
 }
