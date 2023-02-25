@@ -22,10 +22,9 @@ program.command('route')
     '-t --testData <driverCount>,<destinationCount>',
     'Comma separated count of number of drivers and destinations to generate.'
   )
-  .option('-r --relative', 'Whether to treat paths as relative')
   .option('-f --file', 'Dump output to file')
   .action((args) => {
-    const { testData, destinationFile, driverFile, relative = false, file } = args;
+    const { testData, destinationFile, driverFile, file } = args;
     let destinations, drivers;
 
     if (testData) {
@@ -33,8 +32,8 @@ program.command('route')
       drivers = driverData(parseInt(driverCount));
       destinations = destinationData(parseInt(destinationCount));
     } else {
-      drivers = readData(driverFile, relative);
-      destinations = readData(destinationFile, relative);
+      drivers = readData(driverFile);
+      destinations = readData(destinationFile);
     }
 
     const results = routeShipments(drivers, destinations);
