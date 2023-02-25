@@ -94,15 +94,15 @@ describe('rules/', () => {
   });
 
   describe('countConsonants/', () => {
-    it('returns the correct number of vowels in a string', () => {
+    it('returns the correct number of consonants in a string', () => {
       expect(countConsonants('Gerold')).toBe(4);
     });
 
-    it.skip('returns the correct count of vowels including "Y"', () => {
+    it.skip('returns the correct count of consonants including "Y"', () => {
       expect(countConsonants('Lady Gaga')).toBe(5);
     })
 
-    it('returns the 0 if there are no vowels in a string', () => {
+    it('returns the 0 if there are no consonants in a string', () => {
       expect(countConsonants('Psst')).toBe(4);
     });
 
