@@ -1,9 +1,10 @@
 'use strict';
 
+const path = require('path');
 const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
 const { driverData, destinationData } = require('./test/generate');
-const { readData } = require('./src/lib/parse');
+const { readData, writeData } = require('./src/lib/files');
 
 const program = new Command();
 
@@ -32,10 +33,30 @@ program.command('route')
       drivers = readData(driverFile);
       destinations = readData(destinationFile);
     }
-    console.log(drivers);
-    console.log(destinations);
+
     const results = routeShipments(drivers, destinations);
-    console.log(results);
+    console.log(JSON.stringify(results));
+  });
+
+program.command('generate')
+  .description('Generate data for use with the command line tool')
+  .option('-d --driverCount <driverCount>', 'Number of driver names to generate')
+  .option('-s --destinationCount <destinationCount>', 'Number of destinations to generate')
+  .option('-p --path <path>', 'Path to save files. If not included will output on command line.')
+  .action((args) => {
+    const { driverCount, destinationCount, path: filePath } = args;
+
+    const drivers = driverData(parseInt(driverCount));
+    const destinations = destinationData(parseInt(destinationCount));
+
+    if (filePath) {
+      writeData(path.join(filePath, 'drivers.data'), drivers);
+      writeData(path.join(filePath, 'destinations.data'), destinations);
+      return;
+    }
+
+    console.log('Drivers: ', drivers);
+    console.log('Destinations: ', destinations);
   });
 
 program.parse();
