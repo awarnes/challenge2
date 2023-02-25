@@ -1,0 +1,7 @@
+.github/
+resources/
+**/*.test.js
+testData.txt
+test/data/
+coverage/
+.eslintrc.json
