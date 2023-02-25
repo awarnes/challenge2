@@ -1,22 +1,10 @@
 'use strict';
 
-const path = require('path');
-const { readData, streetName } = require('../parse');
+const { streetName } = require('../parse');
 const { TYPE_ERROR, STREET_NAME_NOT_FOUND_ERROR } = require('../errors/error-codes');
 const ShipRouteError = require('../errors/ship-route-error');
 
 describe('parse/', () => {
-  describe('readData/', () => {
-    it('readsData from a relative file', () => {
-      expect(readData('.gitignore')).toEqual(['.DS_Store', 'node_modules/']);
-    });
-
-    it('readsData from an explicit file path', () => {
-      expect(readData(path.join(__dirname, 'testData.txt'), false))
-        .toEqual(['Hello', 'second line']);
-    });
-  });
-
   describe('streetName/', () => {
     it('returns the street name from a simple address string', () => {
       expect(streetName('123 Fake St')).toEqual('Fake');

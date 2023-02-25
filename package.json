@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .js",
-    "test": "npm run lint && jest",
-    "test:integration": "./integration.sh",
+    "test": "npm run lint && npm run test:unit && npm run test:integration",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest test/integration.test.js",
+    "test:unit": "jest src",
     "test:watch": "jest --watch",
     "postinstall": "INIT_CWD=$(git rev-parse --show-toplevel) node resources/git-hooks.js"
   },

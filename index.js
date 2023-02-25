@@ -1,9 +1,10 @@
 'use strict';
 
+const path = require('path');
 const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
 const { driverData, destinationData } = require('./test/generate');
-const { readData } = require('./src/lib/parse');
+const { readData, writeData } = require('./src/lib/files');
 
 const program = new Command();
 
@@ -20,8 +21,9 @@ program.command('route')
     '-t --testData <driverCount>,<destinationCount>',
     'Comma separated count of number of drivers and destinations to generate.'
   )
+  .option('-r --relative', 'Whether to treat paths as relative')
   .action((args) => {
-    const { testData, destinationFile, driverFile } = args;
+    const { testData, destinationFile, driverFile, relative = false } = args;
     let destinations, drivers;
 
     if (testData) {
@@ -29,13 +31,33 @@ program.command('route')
       drivers = driverData(parseInt(driverCount));
       destinations = destinationData(parseInt(destinationCount));
     } else {
-      drivers = readData(driverFile);
-      destinations = readData(destinationFile);
+      drivers = readData(driverFile, relative);
+      destinations = readData(destinationFile, relative);
     }
-    console.log(drivers);
-    console.log(destinations);
+
     const results = routeShipments(drivers, destinations);
-    console.log(results);
+    console.log(JSON.stringify(results));
+  });
+
+program.command('generate')
+  .description('Generate data for use with the command line tool')
+  .option('-d --driverCount <driverCount>', 'Number of driver names to generate')
+  .option('-s --destinationCount <destinationCount>', 'Number of destinations to generate')
+  .option('-p --path <path>', 'Path to save files. If not included will output on command line.')
+  .action((args) => {
+    const { driverCount, destinationCount, path: filePath } = args;
+
+    const drivers = driverData(parseInt(driverCount));
+    const destinations = destinationData(parseInt(destinationCount));
+
+    if (filePath) {
+      writeData(path.join(filePath, 'drivers.data'), drivers);
+      writeData(path.join(filePath, 'destinations.data'), destinations);
+      return;
+    }
+
+    console.log('Drivers: ', drivers);
+    console.log('Destinations: ', destinations);
   });
 
 program.parse();
