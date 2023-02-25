@@ -1,8 +1,6 @@
 'use strict';
 
-const { mapJobs, score } = require('../score');
-// const ShipRouteError = require('../errors/ship-route-error');
-// const {TYPE_ERROR} = require('../errors/error-codes');
+const { mapJobs, _mapJobs, score } = require('../score');
 
 describe('score/', () => {
   describe('score/', () => {
@@ -23,8 +21,8 @@ describe('score/', () => {
     });
   });
 
-  describe('mapJobs/', () => {
-    it('properly maps driver and destination scores', () => {
+  describe('_mapJobs/', () => {
+    it('properly maps driver and destination scores', async () => {
       const drivers = ['apple', 'sauce', 'pork', 'chops'];
       const destinations = [
         '123 Fake St',
@@ -33,7 +31,7 @@ describe('score/', () => {
         '1011 Billboard Ave'
       ];
 
-      expect(mapJobs(drivers, destinations)).toEqual([
+      expect(await _mapJobs(drivers, destinations)).toEqual([
         [-3, -4.5, -3, -3],
         [-4.5, -6.75, -2, -2],
         [-2.25, -2.25, -3, -3],
@@ -41,7 +39,7 @@ describe('score/', () => {
       ]);
     });
 
-    it('properly maps driver and destination scores when there are more drivers', () => {
+    it('properly maps driver and destination scores when there are more drivers', async () => {
       const drivers = ['apple', 'sauce', 'pork', 'chops'];
       const destinations = [
         '123 Fake St',
@@ -49,7 +47,7 @@ describe('score/', () => {
         '789 Turtle Dove Lane'
       ];
 
-      expect(mapJobs(drivers, destinations)).toEqual([
+      expect(await _mapJobs(drivers, destinations)).toEqual([
         [-3, -4.5, -3],
         [-4.5, -6.75, -2],
         [-2.25, -2.25, -3],
@@ -57,7 +55,7 @@ describe('score/', () => {
       ]);
     });
 
-    it('properly maps driver and destination scores when there are more destinations', () => {
+    it('properly maps driver and destination scores when there are more destinations', async () => {
       const drivers = ['apple', 'sauce', 'pork'];
       const destinations = [
         '123 Fake St',
@@ -66,11 +64,37 @@ describe('score/', () => {
         '1011 Billboard Ave'
       ];
 
-      expect(mapJobs(drivers, destinations)).toEqual([
+      expect(await _mapJobs(drivers, destinations)).toEqual([
         [-3, -4.5, -3, -3],
         [-4.5, -6.75, -2, -2],
         [-2.25, -2.25, -3, -3]
       ]);
+    });
+  });
+
+  describe('mapJobs/', () => {
+    it('properly maps driver and destination scores when using small input', async () => {
+      const drivers = ['apple', 'sauce', 'pork', 'chops'];
+      const destinations = [
+        '123 Fake St',
+        '456 Paddington Way',
+        '789 Turtle Dove Lane',
+        '1011 Billboard Ave'
+      ];
+
+      expect(await mapJobs(drivers, destinations)).toEqual([
+        [-3, -4.5, -3, -3],
+        [-4.5, -6.75, -2, -2],
+        [-2.25, -2.25, -3, -3],
+        [-1.5, -2.25, -4, -4]
+      ]);
+    });
+
+    it('properly maps driver and destination scores when using large inputs', async () => {
+      const drivers = Array(500).fill('some string');
+      const destinations = Array(500).fill('other string');
+
+      expect(await mapJobs(drivers, destinations)).toEqual(Array(500).fill(Array(500).fill(-7)));
     });
   });
 });

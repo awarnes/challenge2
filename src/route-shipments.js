@@ -11,8 +11,8 @@ const { mapJobs } = require('./lib/score');
  * @returns {{suitabilityScore: number, matches: string[][]}}
  * returns the suitabilityScore and list of matches
  */
-module.exports = (drivers, destinations) => {
-  const possibleJobs = mapJobs(drivers, destinations);
+module.exports = async (drivers, destinations) => {
+  const possibleJobs = await mapJobs(drivers, destinations);
 
   const results = hungarian(possibleJobs);
 

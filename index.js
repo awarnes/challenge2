@@ -25,7 +25,7 @@ program.command('route')
     'Comma separated count of number of drivers and destinations to generate.'
   )
   .option('-f --file', 'Dump output to file')
-  .action((args) => {
+  .action(async (args) => {
     const { testData, destinationFile, driverFile, file } = args;
     let destinations, drivers;
 
@@ -38,7 +38,7 @@ program.command('route')
       destinations = readData(destinationFile);
     }
 
-    const results = routeShipments(drivers, destinations);
+    const results = await routeShipments(drivers, destinations);
 
     prettify(results);
 
