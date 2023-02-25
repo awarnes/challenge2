@@ -33,6 +33,18 @@ function score (driver, destination) {
   return factors.length > 1 ? baseSuitabilityScore * 1.5 : baseSuitabilityScore;
 }
 
+function mapJobs (drivers, destinations) {
+  const possibleJobs = [];
+  drivers.forEach((driver, index) => {
+    possibleJobs.push([]);
+    destinations.forEach(destination => {
+      possibleJobs[index].push(score(driver, destination) * -1);
+    });
+  });
+  return possibleJobs;
+}
+
 module.exports = {
-  score
+  score,
+  mapJobs
 };
