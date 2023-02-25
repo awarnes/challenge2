@@ -2,7 +2,8 @@
 
 const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
-const {driverData, destinationData} = require('./test/generate');
+const { driverData, destinationData } = require('./test/generate');
+const { readData } = require('./src/lib/parse');
 
 const program = new Command();
 
@@ -14,22 +15,27 @@ program
 program.command('route')
   .description('Route shipments to drivers given a list of shipments and list of drivers')
   .option('-d --driverFile <driverFile>', 'file of driver names \\n separated')
-  .option('-c --driverCount <drivers>', 'file of driver names \\n separated')
   .option('-s --destinationFile <destinationFile>', 'list of shipment destinations \\n separated')
-  .option('-r --destinationCount <destinations>', 'list of shipment destinations \\n separated')
+  .option(
+    '-t --testData <driverCount>,<destinationCount>',
+    'Comma separated count of number of drivers and destinations to generate.'
+  )
   .action((args) => {
-    const {destinationCount, driverCount, destinationFile, driverFile} = args;
+    const { testData, destinationFile, driverFile } = args;
     let destinations, drivers;
 
-    if (destinationCount && driverCount) {
+    if (testData) {
+      const [driverCount, destinationCount] = testData.split(',');
       drivers = driverData(parseInt(driverCount));
       destinations = destinationData(parseInt(destinationCount));
     } else {
-      // Get data from file instead
+      drivers = readData(driverFile);
+      destinations = readData(destinationFile);
     }
-
+    console.log(drivers);
+    console.log(destinations);
     const results = routeShipments(drivers, destinations);
-    console.log(results)
+    console.log(results);
   });
 
 program.parse();
