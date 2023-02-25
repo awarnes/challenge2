@@ -31,7 +31,11 @@ function readData (fileName, relative = true) {
 }
 
 function writeData (filePath, data) {
-  fs.writeFileSync(filePath, data.join('\n'));
+  if (typeof data !== 'string') {
+    data = data.join('\n');
+  }
+
+  fs.writeFileSync(filePath, data);
 }
 
 module.exports = {

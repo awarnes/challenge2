@@ -9,7 +9,12 @@ const { readData, writeData } = require('../files');
 describe('files/', () => {
   describe('readData/', () => {
     it('readsData from a relative file', () => {
-      expect(readData('.gitignore')).toEqual(['.DS_Store', 'node_modules/', 'coverage/']);
+      expect(readData('.gitignore')).toEqual([
+        '.DS_Store',
+        'node_modules/',
+        'coverage/',
+        'driver-destinations.txt'
+      ]);
     });
 
     it('readsData from an explicit file path', () => {
@@ -35,8 +40,14 @@ describe('files/', () => {
       fs.rmSync(filePath);
     });
 
-    it('writes data to a relative file', () => {
+    it('writes data array to a relative file', () => {
       writeData(filePath, ['hello', 'line two!']);
+      expect(fs.existsSync(filePath)).toEqual(true);
+      expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
+    });
+
+    it('writes data string to a relative file', () => {
+      writeData(filePath, 'hello\nline two!');
       expect(fs.existsSync(filePath)).toEqual(true);
       expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
     });

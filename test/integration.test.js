@@ -40,25 +40,17 @@ describe('Shipment Routing CLI', () => {
       ], '.');
 
       expect(result.code).toBe(0);
-      expect(result.stdout).toEqual(`${JSON.stringify({
-        suitabilityScore: 38.5,
-        matches: [
-          ['Minnie Auer', '23214 Batz Forest, Compton, FL 09954'],
-          [
-            'Sue Johns',
-            '36768 Candida Ford Apt. 435, Pittsfield, WA 71375-3462'
-          ],
-          ['Darrel Moen', '7215 Flatley Glen, St. Joseph, MS 46635'],
-          [
-            'Carrie Collier',
-            '45262 Lang Forest Apt. 274, Broken Arrow, MN 92295'
-          ],
-          [
-            'Pat White',
-            '6659 Rylee Estates Apt. 768, Mount Pleasant, WI 38130'
-          ]
-        ]
-      })}\n`);
+      expect(result.stdout).toEqual(`Total Suitability Score: 38.5
+┌─────────┬──────────────────┬──────────────────────────────────────────────────────────┐
+│ (index) │      driver      │                       destination                        │
+├─────────┼──────────────────┼──────────────────────────────────────────────────────────┤
+│    0    │  'Minnie Auer'   │          '23214 Batz Forest, Compton, FL 09954'          │
+│    1    │   'Sue Johns'    │ '36768 Candida Ford Apt. 435, Pittsfield, WA 71375-3462' │
+│    2    │  'Darrel Moen'   │        '7215 Flatley Glen, St. Joseph, MS 46635'         │
+│    3    │ 'Carrie Collier' │   '45262 Lang Forest Apt. 274, Broken Arrow, MN 92295'   │
+│    4    │   'Pat White'    │ '6659 Rylee Estates Apt. 768, Mount Pleasant, WI 38130'  │
+└─────────┴──────────────────┴──────────────────────────────────────────────────────────┘
+`);
     });
 
     it('should print the help for the command', async () => {
@@ -73,6 +65,7 @@ Options:
   -s --destinationFile <destinationFile>          list of shipment destinations \\n separated
   -t --testData <driverCount>,<destinationCount>  Comma separated count of number of drivers and destinations to generate.
   -r --relative                                   Whether to treat paths as relative
+  -f --file                                       Dump output to file
   -h, --help                                      display help for command
 `);
     });
