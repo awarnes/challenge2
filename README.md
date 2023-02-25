@@ -4,12 +4,93 @@ Code challenge to create a CLI for routing shipments to drivers.
 
 ## Table of Contents
 
-1. [Description](#description)
-1. [Assumptions](#assumptions)
 1. [Installation](#installation)
 1. [Usage](#usage)
+1. [Description](#description)
+1. [Assumptions](#assumptions)
 1. [Challenges](#challenges)
 1. [Future Possibilities](#future-possibilities)
+
+## Installation
+[To Top ↑](#table-of-contents)
+
+Install package:
+```bash
+npm install @awarnes/shipment-routing
+```
+Install pre-release:
+```bash
+npm install @awarnes/shipment-routing@next
+```
+
+### Prepare Script
+The `prepare` script will run after all dependencies have been installed (locally). This script will install the `pre-push` git-hook into the `.git/hooks` directory in the project. This helps ensure that everything has been properly linted and all tests are passing.
+
+> Note: If in dire need you can always add the `--no-verify` flag to your push command to skip the checks. Make sure that everything lints and passes testing prior to creating your PR though!
+
+## Usage
+[To Top ↑](#table-of-contents)
+
+There are two commands with several options each. The easiest way to see how to use them is to run:
+```bash
+shipment-routing help
+```
+
+### Route
+
+Usage: `shipment-routing route [options]`
+
+Route shipments to drivers given a list of shipments and list of drivers
+
+| Options | Description |
+|---------|-------------|
+| -d --driverFile | File of driver names \\n separated|
+| -s --destinationFile | File of shipment destinations \\n separated |
+| -t --testData | Comma separated count of number of drivers and destinations to generate. |
+| -f --file | Dump output to file |
+| -h, --help | display help for command |
+
+#### Examples
+Read drivers and destinations from file
+```bash
+shipment-routing route -d ./some/file/with/driver.data -s ./some/file/with/destination.data
+```
+Read drivers and destinations from file and output to file
+```bash
+shipment-routing route -d ./some/file/with/driver.data -s ./some/file/with/destination.data -f
+```
+Route 25 randomized drivers and 25 randomized destinations
+```bash
+shipment-routing route -t 25,25
+```
+
+### Generate
+
+Usage: `shipment-routing generate [options]`
+
+Generate data for use with the command line tool
+
+| Options | Descriptions |
+| ------- | ------------ |
+| -d --driverCount | Number of driver names to generate|
+| -s --destinationCount | Number of destinations to generate|
+| -p --path | Path to save files. If not included will output on command line. |
+| -h, --help | display help for command|
+
+#### Examples
+Print out 25 randomized drivers and 25 randomized destinations
+```bash
+shipment-routing generate -d 25 -s 25
+```
+Write 25 randomized drivers and 25 randomized destinations to files in the current working directory.
+```bash
+shipment-routing generate -d 25 -s 25 -p .
+```
+Generate a file of 25 drivers and 25 destinations, then run the routing function on them.
+```bash
+shipment-routing generate -d 25 -s 25 -p . && shipment-routing generate -d ./drivers.data -s ./destinations.data
+```
+
 ## Description
 [To Top ↑](#table-of-contents)
 
@@ -50,104 +131,31 @@ Some of the assumptions that were made for this project:
     - `123 Fake St` the street name is `Fake`
     - `1242 East Paddington Highway` the street name is `Paddington`.
 1. Driver names and destination addresses will each be input on a single line (no newline breaks internal to the name/address)
-## Installation
-[To Top ↑](#table-of-contents)
+1. `Y` is always a consonant (see [Issue #14](https://github.com/awarnes/shipment-routing/issues/14))
 
-Installation should be a simple:
-```bash
-npm install
-```
-
-### Postinstall Script
-The `postinstall` script will run after all dependencies have been installed. This script will install the `pre-push` git-hook into the `.git/hooks` directory in the project. This helps ensure that everything has been properly linted and all tests are passing.
-
-> Note: If in dire need you can always add the `--no-verify` flag to your push command to skip the checks. Make sure that everything lints and passes testing prior to creating your PR though!
-
-## Usage
-[To Top ↑](#table-of-contents)
-
-There are two commands with several options each. The easiest way to see how to use them is to run:
-```bash
-node index help
-```
-
-### Route
-
-Usage:
-- `node index route [options]`
-- `shipment-routing route [options]`
-
-Route shipments to drivers given a list of shipments and list of drivers
-
-| Options | Description |
-|---------|-------------|
-| -d --driverFile | File of driver names \\n separated|
-| -s --destinationFile | File of shipment destinations \\n separated |
-| -t --testData | Comma separated count of number of drivers and destinations to generate. |
-| -f --file | Dump output to file |
-| -h, --help | display help for command |
-
-#### Examples
-Read drivers and destinations from file
-```bash
-node index route -d ./test/data/drivers100.data -s ./test/data/destinations100.data
-```
-Read drivers and destinations from file and output to file
-```bash
-node index route -d ./test/data/drivers100.data -s ./test/data/destinations100.data -f
-```
-Route 25 randomized drivers and 25 randomized destinations
-```bash
-node index route -t 25,25
-```
-
-### Generate
-
-Usage:
-- `node index generate [options]`
-- `shipment-routing generate [options]`
-
-Generate data for use with the command line tool
-
-| Options | Descriptions |
-| ------- | ------------ |
-| -d --driverCount | Number of driver names to generate|
-| -s --destinationCount | Number of destinations to generate|
-| -p --path | Path to save files. If not included will output on command line. |
-| -h, --help | display help for command|
-
-#### Examples
-Print out 25 randomized drivers and 25 randomized destinations
-```bash
-node index generate -d 25 -s 25
-```
-Write 25 randomized drivers and 25 randomized destinations to files in the current working directory.
-```bash
-node index generate -d 25 -s 25 -p .
-```
 ## Challenges
 [To Top ↑](#table-of-contents)
 
-This project was a lot of fun. I especially enjoyed being able to add all the quality of life features that every project should have. However, I did run into several challenges during the process.
+This project was a lot of fun. I especially enjoyed being able to add all the quality of life features that every project should have. I did run into a few challenges during the process, which were interesting to solve.
 ### Algorithm
 #### Assignment Problem
 I had put off the actual meat of the algorithm until later on thinking that it wouldn't be so difficult. What I had missed was the solution requirement that it:
 >...maximizes the total SS over the set of drivers...
 
-I tried a few brute force ways to begin with until I realized that there was a lot more going on to get the optimal value over the _entire_ set of drivers.
+I tried a attacking it a few different ways to begin with until I realized that there was a lot more going on to get the optimal value over the _entire_ set of drivers and destinations.
 
-After more research I was able to find the [assignment problem](https://en.wikipedia.org/wiki/Assignment_problem) and realized that was what I needed to code around. It was fairly quick work to find a library that could handle the task relatively quickly. It could be interesting in the future to code my own algorithm, but this seems to be working efficiently for now.
+After more research I was able to find the [assignment problem](https://en.wikipedia.org/wiki/Assignment_problem) and realized that was what I needed to code around. After that, it was fairly quick work to find a library that could handle the task effectively. It could be interesting in the future to code my own algorithm, but this seems to be working efficiently for now.
 #### Map Jobs
-As part of the required input for the [hungarian method](https://en.wikipedia.org/wiki/Hungarian_algorithm) we need to create a table of all possible combinations. I have a very rudimentary O(nm) ≈ O(n<sup>2</sup>) mapping function which is easily the worst bottleneck in the program. I would like to come back and see if there's a way to make it more efficient for larger data sets.
+As part of the required input for the [hungarian method](https://en.wikipedia.org/wiki/Hungarian_algorithm) we need to create a table of all possible combinations. I have a very rudimentary O(nm) ≈ O(n<sup>2</sup>) mapping function which is easily the biggest bottleneck in the program. I would like to come back and see if there's a way to make it more efficient for larger data sets (see [Issue #15](https://github.com/awarnes/shipment-routing/issues/15)).
 
 ### Testing Commander
-One of the other big challenges I had was how to manage the integration testing for [Commander.js](https://www.npmjs.com/package/commander). I toyed around with a few different things and ended up settling with the current solution of creating a subprocess to the testing process for each test. This seems to be working okay in terms of testing, but is much slower than I'd like it to be. I do worry that if the program took much longer to complete that there could be issues with the way the integration tests are set up.
+One of the other big challenges I had was how to manage the integration testing for [Commander.js](https://www.npmjs.com/package/commander). I toyed around with a few different things and ended up settling with the current solution of creating a subprocess to the testing process for each test. This seems to be working okay in terms of testing, but is much slower than I'd like it to be. I do worry that if the program took much longer to complete or there was some other complication that there could be issues with the way the integration tests are set up.
 ## Future Possibilities
 [To Top ↑](#table-of-contents)
 
 It's never over! Here are a few more things that could be fun/interesting to add to the project.
-1. Publish package
-    - see [Issue #13](https://github.com/awarnes/shipment-routing/issues/13)
+1. Publish package :white_check_mark:
+    - ~~see [Issue #13](https://github.com/awarnes/shipment-routing/issues/13)~~
 1. Fancy Address Parsing
     - Address parsing/validation API: https://www.smarty.com/pricing/choose-your-plan
     - NLP Based Address Parsing: https://www.npmjs.com/package/node-postal

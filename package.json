@@ -11,7 +11,7 @@
     "test:integration": "jest test/integration.test.js",
     "test:unit": "jest src",
     "test:watch": "jest --watch",
-    "postinstall": "INIT_CWD=$(git rev-parse --show-toplevel) node resources/git-hooks.js"
+    "prepare": "INIT_CWD=$(git rev-parse --show-toplevel) node resources/git-hooks.js"
   },
   "repository": {
     "type": "git",
