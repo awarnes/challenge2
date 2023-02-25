@@ -109,7 +109,7 @@ describe('rules/', () => {
     });
 
     it('returns the 0 if there are no consonants in a string', () => {
-      expect(countConsonants('Psst')).toBe(4);
+      expect(countConsonants('aaa')).toBe(0);
     });
 
     describe('errors/', () => {
