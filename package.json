@@ -1,6 +1,6 @@
 {
-  "name": "shipment-routing",
-  "version": "1.0.0",
+  "name": "@awarnes/shipment-routing",
+  "version": "0.0.1",
   "description": "Take home code challenge",
   "main": "index.js",
   "scripts": {
