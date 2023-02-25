@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('node:path');
-const Pool = require('worker-thread-pool');
+const Pool = require('./worker');
 const parse = require('./parse');
 const { commonFactors, countVowels, countConsonants } = require('./rules');
 
