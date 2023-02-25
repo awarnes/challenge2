@@ -2,7 +2,7 @@
 
 /**
  * Prettifies the result output
- * @param {{suitabilityScore: number, matches: string[][]}} results
+ * @param {{suitabilityScore: number, matches: string[][]}} results Result object to print
  */
 function prettify (results) {
   console.log(`Total Suitability Score: ${results.suitabilityScore}`);
@@ -12,7 +12,7 @@ function prettify (results) {
 
 /**
  * Stringifies the result output for dumping to a file
- * @param {{suitabilityScore: number, matches: string[][]}} results
+ * @param {{suitabilityScore: number, matches: string[][]}} results Results object to stringify
  * @returns {string} Prettified string value of results object
  */
 function stringify (results) {

@@ -8,7 +8,8 @@ const { mapJobs } = require('./lib/score');
  * to find the most optimal destinations for each driver
  * @param {Array<string>} drivers Array of driver names
  * @param {Array<string>} destinations Array of destination addresses
- * @returns {Object} returns the suitabilityScore and list of matches
+ * @returns {{suitabilityScore: number, matches: string[][]}}
+ * returns the suitabilityScore and list of matches
  */
 module.exports = (drivers, destinations) => {
   const possibleJobs = mapJobs(drivers, destinations);
