@@ -43,13 +43,13 @@ describe('files/', () => {
     it('writes data array to a file', () => {
       writeData(filePath, ['hello', 'line two!']);
       expect(fs.existsSync(filePath)).toEqual(true);
-      expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
+      expect(readData(filePath)).toEqual(['hello', 'line two!']);
     });
 
     it('writes data string to a file', () => {
       writeData(filePath, 'hello\nline two!');
       expect(fs.existsSync(filePath)).toEqual(true);
-      expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
+      expect(readData(filePath)).toEqual(['hello', 'line two!']);
     });
   });
 });

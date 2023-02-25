@@ -19,6 +19,11 @@ describe('parse/', () => {
         .toEqual('False Portal');
     });
 
+    it('returns just the street name from an address with direction signifier', () => {
+      expect(streetName('123 East Paddington Highway Apt C, Luna, NM 87120'))
+        .toEqual('Paddington');
+    });
+
     describe('errors/', () => {
       it('throws an error when a number is passed', () => {
         try {

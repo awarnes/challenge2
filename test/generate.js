@@ -18,7 +18,7 @@ function destinationData (count = 10) {
 }
 
 /**
- * Generates driver data for testing
+ * Generates driver data for testing (even distribution of male and female names)
  * @param {number} count Number of drivers to generate (default 10)
  * @returns {string[]} Array of driver names
  */

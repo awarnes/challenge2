@@ -23,7 +23,7 @@ function readData (filePath, delimiter = '\n') {
 /**
  * Writes data to a file
  * @param {string} filePath Path to file to write to
- * @param {string | Array<string>} data Data to write to the file,
+ * @param {string | string[]} data Data to write to the file,
  * will join array with delimiter if necessary
  * @param {string} delimiter default '\n'
  */

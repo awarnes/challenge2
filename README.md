@@ -1,11 +1,18 @@
 # Shipment Routing
 
+Code challenge to create a CLI for routing shipments to drivers.
+
+## Table of Contents
+
 1. [Description](#description)
+1. [Assumptions](#assumptions)
 1. [Installation](#installation)
 1. [Usage](#usage)
 1. [Challenges](#challenges)
 1. [Future Possibilities](#future-possibilities)
-## Description [↑](#shipment-routing)
+## Description
+[To Top ↑](#table-of-contents)
+
 Our sales team has just struck a deal with Acme Inc to become the exclusive provider for routing their product shipments via 3rd party trucking fleets. The catch is that we can only route one shipment to one driver per day.
 
 Each day we get the list of shipment destinations that are available for us to offer to drivers in our network. Fortunately our team of highly trained data scientists have developed a mathematical model for determining which drivers are best suited to deliver each shipment.
@@ -27,7 +34,25 @@ The output should be the total SS and a matching between shipment destinations a
 
 You do not need to worry about malformed input, but you should certainly handle both upper and lower case names.
 
-## Installation [↑](#shipment-routing)
+## Assumptions
+[To Top ↑](#table-of-contents)
+
+Some of the assumptions that were made for this project:
+
+1. Driver's name includes their entire name and spaces between:
+    - honorific/title (if applicable)
+    - First Name
+    - Middle Name(s)
+    - Last Name
+    - Any other titles
+1. Destinations will generally meet [USPS address specifications](https://pe.usps.com/text/pub28/28c2_001.htm)
+1. The `destination street name` is the [street name](https://pe.usps.com/text/pub28/28c2_012.htm) with no direction signifiers, prefixes, or suffixes. For example:
+    - `123 Fake St` the street name is `Fake`
+    - `1242 East Paddington Highway` the street name is `Paddington`.
+1. Driver names and destination addresses will each be input on a single line (no newline breaks internal to the name/address)
+## Installation
+[To Top ↑](#table-of-contents)
+
 Installation should be a simple:
 ```bash
 npm install
@@ -38,7 +63,8 @@ The `postinstall` script will run after all dependencies have been installed. Th
 
 > Note: If in dire need you can always add the `--no-verify` flag to your push command to skip the checks. Make sure that everything lints and passes testing prior to creating your PR though!
 
-## Usage [↑](#shipment-routing)
+## Usage
+[To Top ↑](#table-of-contents)
 
 There are two commands with several options each. The easiest way to see how to use them is to run:
 ```bash
@@ -47,7 +73,9 @@ node index help
 
 ### Route
 
-Usage: `shipment-routing route [options]`
+Usage:
+- `node index route [options]`
+- `shipment-routing route [options]`
 
 Route shipments to drivers given a list of shipments and list of drivers
 
@@ -75,7 +103,9 @@ node index route -t 25,25
 
 ### Generate
 
-Usage: `shipment-routing generate [options]`
+Usage:
+- `node index generate [options]`
+- `shipment-routing generate [options]`
 
 Generate data for use with the command line tool
 
@@ -95,22 +125,26 @@ Write 25 randomized drivers and 25 randomized destinations to files in the curre
 ```bash
 node index generate -d 25 -s 25 -p .
 ```
-## Challenges [↑](#shipment-routing)
+## Challenges
+[To Top ↑](#table-of-contents)
+
 This project was a lot of fun. I especially enjoyed being able to add all the quality of life features that every project should have. However, I did run into several challenges during the process.
 ### Algorithm
 #### Assignment Problem
 I had put off the actual meat of the algorithm until later on thinking that it wouldn't be so difficult. What I had missed was the solution requirement that it:
->maximizes the total SS over the set of drivers
+>...maximizes the total SS over the set of drivers...
 
-I tried a few brute force ways to begin with until I realized that there was a lot more going on to get the optimal value over the entire set of drivers.
+I tried a few brute force ways to begin with until I realized that there was a lot more going on to get the optimal value over the _entire_ set of drivers.
 
-After more research I was able to find the [assignment problem](https://en.wikipedia.org/wiki/Assignment_problem) and realized that was what I needed to code around. It was fairly quick work to find a library that could handle the task relatively quickly. It could be interesting in the future to code my own algorithm, but this seems to be efficient and working well.
+After more research I was able to find the [assignment problem](https://en.wikipedia.org/wiki/Assignment_problem) and realized that was what I needed to code around. It was fairly quick work to find a library that could handle the task relatively quickly. It could be interesting in the future to code my own algorithm, but this seems to be working efficiently for now.
 #### Map Jobs
 As part of the required input for the [hungarian method](https://en.wikipedia.org/wiki/Hungarian_algorithm) we need to create a table of all possible combinations. I have a very rudimentary O(nm) ≈ O(n<sup>2</sup>) mapping function which is easily the worst bottleneck in the program. I would like to come back and see if there's a way to make it more efficient for larger data sets.
 
 ### Testing Commander
 One of the other big challenges I had was how to manage the integration testing for [Commander.js](https://www.npmjs.com/package/commander). I toyed around with a few different things and ended up settling with the current solution of creating a subprocess to the testing process for each test. This seems to be working okay in terms of testing, but is much slower than I'd like it to be. I do worry that if the program took much longer to complete that there could be issues with the way the integration tests are set up.
-## Future Possibilities [↑](#shipment-routing)
+## Future Possibilities
+[To Top ↑](#table-of-contents)
+
 It's never over! Here are a few more things that could be fun/interesting to add to the project.
 1. Publish package
     - see [Issue #13](https://github.com/awarnes/shipment-routing/issues/13)
