@@ -8,7 +8,7 @@ const {
 } = require('./error-codes');
 
 function throwFileNotFoundError (fileName) {
-  throw new ShipRouteError(`[${fileName}] name not found!`, {
+  throw new ShipRouteError(`[${fileName}] file not found!`, {
     code: FILE_NOT_FOUND_ERROR
   });
 }

@@ -23,7 +23,7 @@ describe('files/', () => {
       } catch (err) {
         expect(err).toBeInstanceOf(ShipRouteError);
         expect(err.code).toBe(FILE_NOT_FOUND_ERROR);
-        expect(err.message).toBe(`[${path.join(__dirname, 'torstDerter.txt')}] name not found!`);
+        expect(err.message).toBe(`[${path.join(__dirname, 'torstDerter.txt')}] file not found!`);
       }
     });
   });
