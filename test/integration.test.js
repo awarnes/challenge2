@@ -4,6 +4,15 @@
 const path = require('path');
 const exec = require('child_process').exec;
 
+/**
+ * Test CLI to spawn new subprocesses for testing and validating
+ * Commander.js cli programs.
+ * @param {string[]} args arguments to include in the call to the cli program
+ * @param {string} cwd Current working directory to start the process in
+ * @returns {Promise<{code: number, error: string, stdout: string, stderr: string}>}
+ * returns a promise that resolves to include the code, error message, stdout, and stderr
+ * of the running subprocess.
+ */
 function testCli (args, cwd) {
   return new Promise(resolve => {
     exec(`node ${path.resolve('./index')} ${args.join(' ')}`,
@@ -64,7 +73,6 @@ Options:
   -d --driverFile <driverFile>                    file of driver names \\n separated
   -s --destinationFile <destinationFile>          list of shipment destinations \\n separated
   -t --testData <driverCount>,<destinationCount>  Comma separated count of number of drivers and destinations to generate.
-  -r --relative                                   Whether to treat paths as relative
   -f --file                                       Dump output to file
   -h, --help                                      display help for command
 `);

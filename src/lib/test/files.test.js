@@ -18,13 +18,13 @@ describe('files/', () => {
     });
 
     it('readsData from an explicit file path', () => {
-      expect(readData(path.join(__dirname, 'testData.txt'), false))
+      expect(readData(path.join(__dirname, 'testData.txt')))
         .toEqual(['Hello', 'second line']);
     });
 
-    it('throws an error when a number is passed', () => {
+    it('throws an error when the file cannot be found', () => {
       try {
-        readData(path.join(__dirname, 'torstDerter.txt'), false);
+        readData(path.join(__dirname, 'torstDerter.txt'));
       } catch (err) {
         expect(err).toBeInstanceOf(ShipRouteError);
         expect(err.code).toBe(FILE_NOT_FOUND_ERROR);
@@ -40,16 +40,16 @@ describe('files/', () => {
       fs.rmSync(filePath);
     });
 
-    it('writes data array to a relative file', () => {
+    it('writes data array to a file', () => {
       writeData(filePath, ['hello', 'line two!']);
       expect(fs.existsSync(filePath)).toEqual(true);
-      expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
+      expect(readData(filePath)).toEqual(['hello', 'line two!']);
     });
 
-    it('writes data string to a relative file', () => {
+    it('writes data string to a file', () => {
       writeData(filePath, 'hello\nline two!');
       expect(fs.existsSync(filePath)).toEqual(true);
-      expect(readData(filePath, false)).toEqual(['hello', 'line two!']);
+      expect(readData(filePath)).toEqual(['hello', 'line two!']);
     });
   });
 });
