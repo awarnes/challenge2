@@ -4,8 +4,8 @@ const { throwTypeError } = require('./errors/error-utils');
 
 /**
  * Returns the common factors of two numbers
- * @param {Number} first
- * @param {Number} second
+ * @param {number} first
+ * @param {number} second
  */
 function commonFactors (first, second) {
   const firstFactors = factorize(first);
@@ -17,8 +17,8 @@ function commonFactors (first, second) {
 /**
  * Count number of consonants in a given string
  * TODO: Add 'sometimes y' counting
- * @param {String} string
- * @returns {Number} number of vowels in a given string
+ * @param {string} string
+ * @returns {number} number of vowels in a given string
  */
 function countConsonants (string) {
   if (typeof string !== 'string') {
@@ -31,8 +31,8 @@ function countConsonants (string) {
 /**
  * Count number of vowels in a given string
  * TODO: Add 'sometimes y' counting
- * @param {String} string
- * @returns {Number} number of vowels in a given string
+ * @param {string} string
+ * @returns {number} number of vowels in a given string
  */
 function countVowels (string) {
   if (typeof string !== 'string') {
@@ -44,8 +44,8 @@ function countVowels (string) {
 
 /**
  * Determine all factors for input number
- * @param {Number} number
- * @returns {Array<Number>} array of all factors
+ * @param {number} number
+ * @returns {Array<number>} array of all factors
  */
 function factorize (number) {
   if (typeof number !== 'number') {
@@ -61,8 +61,8 @@ function factorize (number) {
 
 /**
  * Whether a string has an even or an odd length
- * @param {String} string
- * @returns {Boolean} true/false, throws error for non-string inputs
+ * @param {string} string
+ * @returns {boolean} true/false, throws error for non-string inputs
  */
 function lengthIsEven (string) {
   if (typeof string !== 'string') {

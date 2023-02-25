@@ -1,4 +1,3 @@
-/* eslint no-sync: "Off", no-console: "Off" */
 'use strict';
 
 const fs = require('fs');
@@ -11,7 +10,7 @@ const prePushFile = path.resolve(hookFolder, 'pre-push');
 
 const FILE_PERMS = 0o755;
 
-function addHook(targetHook, sourceScript) {
+function addHook (targetHook, sourceScript) {
   const copyOrLink = fs.copyFileSync ? fs.copyFileSync : fs.symlinkSync;
 
   if (fs.existsSync(targetHook)) {

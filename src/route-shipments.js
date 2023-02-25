@@ -6,8 +6,8 @@ const { mapJobs } = require('./lib/score');
 /**
  * Using the Hungarian Algorithm (https://en.wikipedia.org/wiki/Hungarian_algorithm)
  * to find the most optimal destinations for each driver
- * @param {Array<String>} drivers Array of driver names
- * @param {Array<String>} destinations Array of destination addresses
+ * @param {Array<string>} drivers Array of driver names
+ * @param {Array<string>} destinations Array of destination addresses
  * @returns {Object} returns the suitabilityScore and list of matches
  */
 module.exports = (drivers, destinations) => {
@@ -29,5 +29,5 @@ module.exports = (drivers, destinations) => {
       destinations[destinationIndex]
     ]);
     return suitabilityMatches;
-  }, {suitabilityScore: 0, matches: []});
+  }, { suitabilityScore: 0, matches: [] });
 };

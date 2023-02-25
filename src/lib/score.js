@@ -17,7 +17,7 @@ base SS.
  * Calculates the suitability score for a given driver and destination
  * @param {*} driver Driver name
  * @param {*} destination Destination address
- * @returns {Number} The sutiability score of the driver to destination
+ * @returns {number} The sutiability score of the driver to destination
  */
 function score (driver, destination) {
   const streetName = parse.streetName(destination);
