@@ -5,5 +5,8 @@ module.exports = {
   extends: [
     'semistandard'
   ],
-  plugins: ['jest']
+  plugins: ['jest'],
+  rules: {
+    'max-len': ['warn', 100]
+  }
 };

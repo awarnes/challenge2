@@ -1,8 +1,14 @@
 'use strict';
 
-const {commonFactors, countConsonants, countVowels, factorize, lengthIsEven} = require('../rules');
+const {
+  commonFactors,
+  countConsonants,
+  countVowels,
+  factorize,
+  lengthIsEven
+} = require('../rules');
 const ShipRouteError = require('../errors/ship-route-error');
-const {TYPE_ERROR} = require('../errors/error-codes');
+const { TYPE_ERROR } = require('../errors/error-codes');
 
 describe('rules/', () => {
   describe('factorize/', () => {
@@ -23,7 +29,7 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: ["Hello!"] not of type number');
         }
-      })
+      });
 
       it('throws an error when an array is passed', () => {
         try {
@@ -33,11 +39,11 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [["apple","sauce"]] not of type number');
         }
-      })
+      });
 
       it('throws an error when an object is passed', () => {
         try {
-          factorize({gary: 'Indiana', length: 12});
+          factorize({ gary: 'Indiana', length: 12 });
         } catch (err) {
           expect(err).toBeInstanceOf(ShipRouteError);
           expect(err.code).toBe(TYPE_ERROR);
@@ -69,7 +75,7 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [12] not of type string');
         }
-      })
+      });
 
       it('throws an error when an array is passed', () => {
         try {
@@ -79,11 +85,11 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [["apple","sauce"]] not of type string');
         }
-      })
+      });
 
       it('throws an error when an object is passed', () => {
         try {
-          lengthIsEven({gary: 'Indiana', length: 12});
+          lengthIsEven({ gary: 'Indiana', length: 12 });
         } catch (err) {
           expect(err).toBeInstanceOf(ShipRouteError);
           expect(err.code).toBe(TYPE_ERROR);
@@ -100,7 +106,7 @@ describe('rules/', () => {
 
     it.skip('returns the correct count of consonants including "Y"', () => {
       expect(countConsonants('Lady Gaga')).toBe(5);
-    })
+    });
 
     it('returns the 0 if there are no consonants in a string', () => {
       expect(countConsonants('Psst')).toBe(4);
@@ -115,7 +121,7 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [12] not of type string');
         }
-      })
+      });
 
       it('throws an error when an array is passed', () => {
         try {
@@ -125,11 +131,11 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [["apple","sauce"]] not of type string');
         }
-      })
+      });
 
       it('throws an error when an object is passed', () => {
         try {
-          countConsonants({gary: 'Indiana', length: 12});
+          countConsonants({ gary: 'Indiana', length: 12 });
         } catch (err) {
           expect(err).toBeInstanceOf(ShipRouteError);
           expect(err.code).toBe(TYPE_ERROR);
@@ -146,7 +152,7 @@ describe('rules/', () => {
 
     it.skip('returns the correct count of vowels including "Y"', () => {
       expect(countVowels('Lady Gaga')).toBe(4);
-    })
+    });
 
     it('returns the 0 if there are no vowels in a string', () => {
       expect(countVowels('Psst')).toBe(0);
@@ -161,7 +167,7 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [12] not of type string');
         }
-      })
+      });
 
       it('throws an error when an array is passed', () => {
         try {
@@ -171,11 +177,11 @@ describe('rules/', () => {
           expect(err.code).toBe(TYPE_ERROR);
           expect(err.message).toBe('Error: [["apple","sauce"]] not of type string');
         }
-      })
+      });
 
       it('throws an error when an object is passed', () => {
         try {
-          countVowels({gary: 'Indiana', length: 12});
+          countVowels({ gary: 'Indiana', length: 12 });
         } catch (err) {
           expect(err).toBeInstanceOf(ShipRouteError);
           expect(err.code).toBe(TYPE_ERROR);

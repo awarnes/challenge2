@@ -4,7 +4,7 @@
   "description": "Take home code challenge",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint . --ext .js",
     "test": "npm run lint && jest",
     "test:integration": "./integration.sh",
     "test:watch": "jest --watch",
