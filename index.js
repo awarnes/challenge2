@@ -5,6 +5,7 @@ const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
 const { driverData, destinationData } = require('./test/generate');
 const { readData, writeData } = require('./src/lib/files');
+const { prettify, stringify } = require('./src/lib/prettify');
 
 const program = new Command();
 
@@ -22,8 +23,9 @@ program.command('route')
     'Comma separated count of number of drivers and destinations to generate.'
   )
   .option('-r --relative', 'Whether to treat paths as relative')
+  .option('-f --file', 'Dump output to file')
   .action((args) => {
-    const { testData, destinationFile, driverFile, relative = false } = args;
+    const { testData, destinationFile, driverFile, relative = false, file } = args;
     let destinations, drivers;
 
     if (testData) {
@@ -36,7 +38,12 @@ program.command('route')
     }
 
     const results = routeShipments(drivers, destinations);
-    console.log(JSON.stringify(results));
+
+    prettify(results);
+
+    if (file) {
+      writeData('driver-destinations.txt', stringify(results));
+    }
   });
 
 program.command('generate')
