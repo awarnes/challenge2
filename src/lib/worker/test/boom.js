@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
-const { parentPort } = require('worker_threads')
+const { parentPort } = require('worker_threads');
 
-parentPort.on('message', handleMessage)
+parentPort.on('message', handleMessage);
 
 function handleMessage (message) {
-  throw new Error('boooom')
+  throw new Error('boooom');
 }
