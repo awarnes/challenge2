@@ -5,7 +5,7 @@
 const path = require('path');
 const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
-const { driverData, destinationData } = require('./test/generate');
+const { driverData, destinationData } = require('./generate-data');
 const { readData, writeData } = require('./src/lib/files');
 const { prettify, stringify } = require('./src/lib/prettify');
 

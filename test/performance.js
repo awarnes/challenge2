@@ -2,7 +2,7 @@
 
 const hungarian = require('hungarian-on3');
 const { mapJobs } = require('../src/lib/score');
-const { driverData, destinationData } = require('./generate');
+const { driverData, destinationData } = require('../generate-data');
 
 const MILLISECONDS = 1000;
 const FLOAT_PRECISION = 3;
