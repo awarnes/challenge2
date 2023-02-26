@@ -5,9 +5,6 @@
   "extends": [
     "semistandard"
   ],
-  "ignorePatterns": [
-    "src/lib/worker/*"
-  ],
   "plugins": [
     "jest"
   ],
