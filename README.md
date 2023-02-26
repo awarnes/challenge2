@@ -89,7 +89,7 @@ shipment-routing generate -d 25 -s 25 -p .
 ```
 Generate a file of 25 drivers and 25 destinations, then run the routing function on them.
 ```bash
-shipment-routing generate -d 25 -s 25 -p . && shipment-routing generate -d ./drivers.data -s ./destinations.data
+shipment-routing generate -d 25 -s 25 -p . && shipment-routing route -d ./drivers.data -s ./destinations.data
 ```
 
 ## Description
