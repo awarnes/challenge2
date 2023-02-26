@@ -47,6 +47,7 @@ Route shipments to drivers given a list of shipments and list of drivers
 | -d --driverFile | File of driver names \\n separated|
 | -s --destinationFile | File of shipment destinations \\n separated |
 | -t --testData | Comma separated count of number of drivers and destinations to generate. |
+| -x --maxThreads | Maximum number of threads to allow for the mapJobs function. Default 4. |
 | -f --file | Dump output to file |
 | -h, --help | display help for command |
 
@@ -88,7 +89,7 @@ shipment-routing generate -d 25 -s 25 -p .
 ```
 Generate a file of 25 drivers and 25 destinations, then run the routing function on them.
 ```bash
-shipment-routing generate -d 25 -s 25 -p . && shipment-routing generate -d ./drivers.data -s ./destinations.data
+shipment-routing generate -d 25 -s 25 -p . && shipment-routing route -d ./drivers.data -s ./destinations.data
 ```
 
 ## Description
@@ -148,6 +149,53 @@ After more research I was able to find the [assignment problem](https://en.wikip
 #### Map Jobs
 As part of the required input for the [hungarian method](https://en.wikipedia.org/wiki/Hungarian_algorithm) we need to create a table of all possible combinations. I have a very rudimentary O(nm) ≈ O(n<sup>2</sup>) mapping function which is easily the biggest bottleneck in the program. I would like to come back and see if there's a way to make it more efficient for larger data sets (see [Issue #15](https://github.com/awarnes/shipment-routing/issues/15)).
 
+##### UPDATE 2/25/23:
+I'm sure there are plenty of other ways to look at improving performance of the program, but for now looking at the map jobs function I've set it up to split this into several jobs and run accross multiple worker threads. From initial testing this has improved the performance of the function from ~17 seconds on a 1000x1000 set to ~4 seconds.
+
+Given the pace of the previous functions I had not thought of testing anything higher than that, but after adding the workers I tried running the program with a 10,000x10,000 set. In that single run the `mapJobs` function took ~290 seconds (~5 mintes). Far longer than I'd generally like, but significantly better than the naive approach.
+
+The implementation of the hungarian algorthim that we're using here is expected to be O(n<sup>3</sup>) in the worst case. It has been interesting to see that it's often significantly faster than the O(nm) that the `mapJobs` function runs through. In this 10,000x10,000 case we definitely tipped over the line though because the runtime was approximately 2158 seconds, or 36 minutes. I have not tried that test again.
+
+###### Performance Testing
+In the interest of collecting some data about the performance of each part of the program I wrote a simple performance testing function (I'm sure there's better out there, but it gives us an idea). You can run it yourself with `npm run test:performance`. These are the results from running each test 10 times and averaging the times:
+```
+Testing with [10] drivers and [10] destinations
+┌─────────────────┬─────────┐
+│     (index)     │ Values  │
+├─────────────────┼─────────┤
+│   driverTime    │ '0.000' │
+│ destinationTime │ '0.008' │
+│   mapJobsTime   │ '0.197' │
+│  hungarianTime  │ '0.002' │
+└─────────────────┴─────────┘
+Testing with [100] drivers and [100] destinations
+┌─────────────────┬─────────┐
+│     (index)     │ Values  │
+├─────────────────┼─────────┤
+│   driverTime    │ '0.000' │
+│ destinationTime │ '0.008' │
+│   mapJobsTime   │ '0.195' │
+│  hungarianTime  │ '0.002' │
+└─────────────────┴─────────┘
+Testing with [500] drivers and [500] destinations
+┌─────────────────┬─────────┐
+│     (index)     │ Values  │
+├─────────────────┼─────────┤
+│   driverTime    │ '0.002' │
+│ destinationTime │ '0.039' │
+│   mapJobsTime   │ '2.470' │
+│  hungarianTime  │ '0.215' │
+└─────────────────┴─────────┘
+Testing with [1000] drivers and [1000] destinations
+┌─────────────────┬─────────┐
+│     (index)     │ Values  │
+├─────────────────┼─────────┤
+│   driverTime    │ '0.007' │
+│ destinationTime │ '0.074' │
+│   mapJobsTime   │ '4.064' │
+│  hungarianTime  │ '1.603' │
+└─────────────────┴─────────┘
+```
 ### Testing Commander
 One of the other big challenges I had was how to manage the integration testing for [Commander.js](https://www.npmjs.com/package/commander). I toyed around with a few different things and ended up settling with the current solution of creating a subprocess to the testing process for each test. This seems to be working okay in terms of testing, but is much slower than I'd like it to be. I do worry that if the program took much longer to complete or there was some other complication that there could be issues with the way the integration tests are set up.
 ## Future Possibilities
@@ -163,3 +211,7 @@ It's never over! Here are a few more things that could be fun/interesting to add
     - see [Issue #14](https://github.com/awarnes/shipment-routing/issues/14)
 1. Re-add Node v14.x support
     - see [Issue #3](https://github.com/awarnes/shipment-routing/issues/3)
+1. Add more command line feedback for the user
+    - What part of the process is the program on?
+    - How far along is it?
+    - Expected time to completion?

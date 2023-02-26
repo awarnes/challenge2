@@ -3,7 +3,7 @@
 const routeShipments = require('../route-shipments');
 
 describe('route-shipments/', () => {
-  it('returns the expected result when drivers and destinations are of equal length', () => {
+  it('returns the expected result when drivers and destinations are of equal length', async () => {
     const drivers = [
       'Lonnie Block',
       'Claudia Schinner',
@@ -19,7 +19,7 @@ describe('route-shipments/', () => {
       '6574 Louie Neck Suite 747, Danville, UT 39781'
     ];
 
-    expect(routeShipments(drivers, destinations)).toEqual({
+    expect(await routeShipments(drivers, destinations)).toEqual({
       suitabilityScore: 56,
       matches: [
         ['Lonnie Block', '6574 Louie Neck Suite 747, Danville, UT 39781'],
@@ -37,7 +37,7 @@ describe('route-shipments/', () => {
     });
   });
 
-  it('returns the expected result when there are more drivers', () => {
+  it('returns the expected result when there are more drivers', async () => {
     const drivers = [
       'Saul Leffler',
       'Bernice Koch',
@@ -52,7 +52,7 @@ describe('route-shipments/', () => {
       '43367 Eldridge Fields, McAllen, MS 26329-8437'
     ];
 
-    expect(routeShipments(drivers, destinations)).toEqual({
+    expect(await routeShipments(drivers, destinations)).toEqual({
       suitabilityScore: 42,
       matches: [
         ['Saul Leffler', '146 Dickinson Viaduct, Fargo, DE 56907'],
@@ -72,7 +72,7 @@ describe('route-shipments/', () => {
     });
   });
 
-  it('returns the expected result when there are more destinations', () => {
+  it('returns the expected result when there are more destinations', async () => {
     const drivers = [
       'Kelly Sipes',
       'Melissa Witting',
@@ -87,7 +87,7 @@ describe('route-shipments/', () => {
       '835 Jessie Prairie Suite 037, Mentor, OR 33437-2854'
     ];
 
-    expect(routeShipments(drivers, destinations)).toEqual({
+    expect(await routeShipments(drivers, destinations)).toEqual({
       suitabilityScore: 50.5,
       matches: [
         ['Kelly Sipes', '9408 Lourdes Cliff Suite 533, Biloxi, WY 27381'],

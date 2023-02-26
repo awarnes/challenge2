@@ -2,6 +2,7 @@
 resources/
 **/*.test.js
 testData.txt
-test/data/
+test/
 coverage/
 .eslintrc.json
+src/lib/worker/test/

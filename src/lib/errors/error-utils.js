@@ -8,6 +8,14 @@ const {
 } = require('./error-codes');
 
 /**
+ * Throws error with all errors
+ * @param {Error[]} errors
+ */
+function throwAllErrors (errors) {
+  throw new ShipRouteError(`Error in workers [${errors}]`);
+}
+
+/**
  * Throws a file not found error
  * @param {string} fileName File name that couldn't be found to call out in the error message
  * @throws {ShipRouteError}
@@ -41,6 +49,7 @@ function throwTypeError (value, type) {
 }
 
 module.exports = {
+  throwAllErrors,
   throwFileNotFoundError,
   throwStreetNameNotFoundError,
   throwTypeError

@@ -13,7 +13,9 @@ describe('files/', () => {
         '.DS_Store',
         'node_modules/',
         'coverage/',
-        'driver-destinations.txt'
+        'driver-destinations.txt',
+        'drivers.data',
+        'destinations.data'
       ]);
     });
 

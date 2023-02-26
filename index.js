@@ -5,7 +5,7 @@
 const path = require('path');
 const { Command } = require('commander');
 const routeShipments = require('./src/route-shipments');
-const { driverData, destinationData } = require('./test/generate');
+const { driverData, destinationData } = require('./generate-data');
 const { readData, writeData } = require('./src/lib/files');
 const { prettify, stringify } = require('./src/lib/prettify');
 
@@ -24,9 +24,10 @@ program.command('route')
     '-t --testData <driverCount>,<destinationCount>',
     'Comma separated count of number of drivers and destinations to generate.'
   )
+  .option('-x --maxThreads <maxThreads>', 'The maximum number of threads to allow in the pool.')
   .option('-f --file', 'Dump output to file')
-  .action((args) => {
-    const { testData, destinationFile, driverFile, file } = args;
+  .action(async (args) => {
+    const { testData, destinationFile, driverFile, file, maxThreads } = args;
     let destinations, drivers;
 
     if (testData) {
@@ -38,7 +39,7 @@ program.command('route')
       destinations = readData(destinationFile);
     }
 
-    const results = routeShipments(drivers, destinations);
+    const results = await routeShipments(drivers, destinations, maxThreads);
 
     prettify(results);
 

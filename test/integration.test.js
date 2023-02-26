@@ -73,6 +73,7 @@ Options:
   -d --driverFile <driverFile>                    file of driver names \\n separated
   -s --destinationFile <destinationFile>          list of shipment destinations \\n separated
   -t --testData <driverCount>,<destinationCount>  Comma separated count of number of drivers and destinations to generate.
+  -x --maxThreads <maxThreads>                    The maximum number of threads to allow in the pool.
   -f --file                                       Dump output to file
   -h, --help                                      display help for command
 `);

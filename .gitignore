@@ -2,3 +2,5 @@
 node_modules/
 coverage/
 driver-destinations.txt
+drivers.data
+destinations.data
