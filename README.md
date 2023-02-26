@@ -9,6 +9,7 @@ Code challenge to create a CLI for routing shipments to drivers.
 1. [Description](#description)
 1. [Assumptions](#assumptions)
 1. [Challenges](#challenges)
+1. [Contributing](#contributing)
 1. [Future Possibilities](#future-possibilities)
 
 ## Installation
@@ -22,11 +23,6 @@ Install pre-release:
 ```bash
 npm install @awarnes/shipment-routing@next
 ```
-
-### Prepare Script
-The `prepare` script will run after all dependencies have been installed (locally). This script will install the `pre-push` git-hook into the `.git/hooks` directory in the project. This helps ensure that everything has been properly linted and all tests are passing.
-
-> Note: If in dire need you can always add the `--no-verify` flag to your push command to skip the checks. Make sure that everything lints and passes testing prior to creating your PR though!
 
 ## Usage
 [To Top ↑](#table-of-contents)
@@ -198,6 +194,101 @@ Testing with [1000] drivers and [1000] destinations
 ```
 ### Testing Commander
 One of the other big challenges I had was how to manage the integration testing for [Commander.js](https://www.npmjs.com/package/commander). I toyed around with a few different things and ended up settling with the current solution of creating a subprocess to the testing process for each test. This seems to be working okay in terms of testing, but is much slower than I'd like it to be. I do worry that if the program took much longer to complete or there was some other complication that there could be issues with the way the integration tests are set up.
+
+## Contributing
+[To Top ↑](#table-of-contents)
+
+Another helping hand is always great! Please feel free to fork and open any PRs as you see fit and we'll review them.
+
+### Getting Started
+
+```bash
+git clone git@github.com:awarnes/shipment-routing.git
+```
+or
+```bash
+git clone https://github.com/awarnes/shipment-routing.git
+```
+
+Once cloned, install dependencies:
+```bash
+npm install
+```
+
+Run the tests to make sure everything is working as expected:
+```bash
+npm test
+```
+
+#### Prepare Script
+The `prepare` script will run after all dependencies have been installed (locally). This script will install the `pre-push` git-hook into the `.git/hooks` directory in the project. This helps ensure that everything has been properly linted and all tests are passing.
+
+> Note: If in dire need you can always add the `--no-verify` flag to your push command to skip the checks. Make sure that everything lints and passes testing prior to creating your PR though!
+
+### Contributing with PRs and code
+
+Make sure to grab an issue that is in the queue from here: https://github.com/awarnes/shipment-routing/issues
+
+> Don't see the issue that you want to fix? Feel free to create an issue and dig in. Note: if the issue isn't something that we want added/changed then we may reject the PR. It always helps to `@awarnes` in your issue description to make sure that we'll be receptive to the PR.
+
+Once you have your issue, make a feature branch, start your work (don't forget to add/update tests and documentation!) and then create a PR in to the `main` branch.
+
+Once the PR has passed all CI tests, we'll review for code style, function, and what have you then approve and merge in the change! If you want to help us out, please add some testing notes about how you expect your change to work.
+
+### Scripts
+
+Run linting:
+```bash
+npm run lint
+```
+
+Fix basic linting issues (suggested before committing):
+```bash
+npm run lint -- --fix
+```
+
+Run performance benchmarks:
+```bash
+npm run performance
+```
+
+Run all linting and tests (unit and integration):
+```bash
+npm test
+```
+> Note: This is run prior to any push to the remote to maintain well tested and linted code 
+
+Generate test coverage report:
+```bash
+npm run test:coverage
+```
+
+Run integration tests:
+```bash
+npm run test:integration
+```
+
+Run unit tests:
+```bash
+npm run test:unit
+```
+
+Run all tests continually while developing:
+```bash
+npm run test:watch
+```
+
+Post install locally adds the pre-push git hook:
+```bash
+npm run prepare
+```
+
+### Deployment
+
+We use the [np](https://www.npmjs.com/package/np) package to help handle deployments. When a new package is ready to be built, tested, and deployed that will be run by the repository maintainers.
+
+`np` helps ensure that everything is ready to go: no un-committed work, everything is tested, and only the right data is making it into the package. Additionally, it helps ensure that a tag is created in the repository, release notes are generated, and that the package version is updated sanely.
+
 ## Future Possibilities
 [To Top ↑](#table-of-contents)
 
