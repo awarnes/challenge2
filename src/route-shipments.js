@@ -8,11 +8,12 @@ const { mapJobs } = require('./lib/score');
  * to find the most optimal destinations for each driver
  * @param {string[]} drivers Array of driver names
  * @param {string[]} destinations Array of destination addresses
+ * @param {number} maxThreads The maximum number of threads to allow into the pool
  * @returns {{suitabilityScore: number, matches: string[][]}}
  * returns the suitabilityScore and list of matches
  */
-module.exports = async (drivers, destinations) => {
-  const possibleJobs = await mapJobs(drivers, destinations);
+module.exports = async (drivers, destinations, maxThreads) => {
+  const possibleJobs = await mapJobs(drivers, destinations, maxThreads);
 
   const results = hungarian(possibleJobs);
 
